@@ -9,6 +9,8 @@ import com.softlica.bishal.gymapp.repos.dataSource.web.RemoteDataSource;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -21,20 +23,21 @@ import io.realm.Realm;
  */
 
 public class GymRepo implements IRepository {
+
+    @Inject
+    RemoteDataSource remote;
     List<GymObjectDB> list;
     private OnDownloadListener listener;
-    RemoteDataSource remote;
     RealmSource databaseSource;
     List<GymObjectDB> gymObjectDBs;
-    CompositeDisposable compositeDisposable;
+//    CompositeDisposable compositeDisposable;
 
 
     public GymRepo() {
-        remote = new RemoteDataSource();
+        App.getNetComponent().inject(this);
         databaseSource = RealmSource.with(App.getInstance());
-        compositeDisposable = new CompositeDisposable();
+//        compositeDisposable = new CompositeDisposable();
     }
-
 
     //    setting download listener from presenter
     public void setListener(OnDownloadListener listener) {
@@ -46,7 +49,8 @@ public class GymRepo implements IRepository {
     public <T> List<T> getPost() {
         Observable<List<GymObjectDB>> remoteObservable = remote.getAll();
 //
-        compositeDisposable.add(remoteObservable.
+//        compositeDisposable.add(
+        remoteObservable.
                 subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<List<GymObjectDB>>() {
@@ -69,8 +73,8 @@ public class GymRepo implements IRepository {
                     @Override
                     public void onComplete() {
                     }
-                })
-        );
+                });
+//        );
 
 //        }
 

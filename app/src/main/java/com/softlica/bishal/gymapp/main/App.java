@@ -22,7 +22,7 @@ import io.realm.RealmConfiguration;
 
 public class App extends Application {
     private static App sInstance;
-    private NetComponent netComponent;
+    private static NetComponent netComponent;
     private MainScreenComponent mainViewComponent;
     public static Location currentLocation;
 
@@ -54,12 +54,10 @@ public class App extends Application {
     }
 
     public static App getInstance() {
-        if (sInstance == null)
-            sInstance = new App();
-        return sInstance;
+           return sInstance;
     }
 
-    public NetComponent getNetComponent() {
+    public static NetComponent getNetComponent() {
         return netComponent;
     }
 }

@@ -21,8 +21,6 @@ import io.realm.RealmResults;
 
 public class DatabaseSource implements IDataSource {
     private static Realm myRealm;
-
-
     public DatabaseSource() {
     }
 

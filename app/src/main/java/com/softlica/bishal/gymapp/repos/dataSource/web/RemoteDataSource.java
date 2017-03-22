@@ -13,6 +13,8 @@ import com.softlica.bishal.gymapp.utilities.Helper;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -34,16 +36,17 @@ public class RemoteDataSource implements IDataSource {
     // Call back for data loading
     CompositeDisposable compositeDisposable;
 
-    Retrofit retrofit = new RetrofitBuilder().getRetrofit();
-    final RetrofitGymApi service;
+    // Retrofit interface injection
+    @Inject
+    RetrofitGymApi service;
 
     // for datastorage
-    DatabaseSource source = new DatabaseSource();
+    @Inject
+    DatabaseSource source ;
 
     public RemoteDataSource() {
         compositeDisposable = new CompositeDisposable();
-        service = retrofit.create(RetrofitGymApi.class);
-
+        App.getNetComponent().injectInGymRemo(this);
 
     }
 
@@ -78,7 +81,6 @@ public class RemoteDataSource implements IDataSource {
     }
 
     public CompositeDisposable getGymFromWeb() {
-        final RetrofitGymApi service = retrofit.create(RetrofitGymApi.class);
         Observable<List<GymObject>> observable = service.getGymData()
                 .map(new Function<List<GymObject>, List<GymObject>>() {
                     @Override

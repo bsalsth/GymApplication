@@ -29,6 +29,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.softlica.bishal.gymapp.R;
+import com.softlica.bishal.gymapp.di.DaggerMainScreenComponent;
 import com.softlica.bishal.gymapp.views.GymRecycleViewAdapter;
 import com.softlica.bishal.gymapp.di.MainScreenModule;
 import com.softlica.bishal.gymapp.main.App;
@@ -107,7 +108,6 @@ public class GymActivity extends AppCompatActivity implements MainScreenContract
             }
         });
         DaggerMainScreenComponent.builder()
-                .netComponent(((App) getApplicationContext()).getNetComponent())
                 .mainScreenModule(new MainScreenModule(this))
                 .build().inject(this);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

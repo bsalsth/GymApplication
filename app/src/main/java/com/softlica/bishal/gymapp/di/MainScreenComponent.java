@@ -9,7 +9,7 @@ import dagger.Component;
  */
 
     @CustomScope
-    @Component(dependencies = NetComponent.class, modules = MainScreenModule.class)
+    @Component(modules = MainScreenModule.class)
     public interface MainScreenComponent {
         void inject(GymActivity activity);
 }
