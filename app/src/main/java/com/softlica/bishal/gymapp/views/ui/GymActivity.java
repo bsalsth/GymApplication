@@ -49,9 +49,9 @@ public class GymActivity extends AppCompatActivity implements MainScreenContract
         GoogleApiClient.OnConnectionFailedListener {
 
 
-    ProgressBar loading;
     @Inject
     GymActivityPresenter presenter;
+    ProgressBar loading;
     RecyclerView recyclerView;
     GymRecycleViewAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
